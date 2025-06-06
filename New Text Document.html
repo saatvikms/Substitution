@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🔥 SKU Formatter 🔥</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3f4f6;
+      padding: 30px;
+      color: #1f2937;
+    }
+    h2 {
+      color: #111827;
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 2px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      resize: vertical;
+    }
+    button {
+      background: linear-gradient(to right, #6366f1, #3b82f6);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    .section {
+      margin-top: 25px;
+    }
+    h3 {
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 13px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <h2>🧾 Paste your SUB + NEW data (tab/space-separated):</h2>
+  <textarea id="input" placeholder="SUB_CODE    NEW_CODE"></textarea>
+  
+  <button onclick="process()">✨ Generate Formatted Outputs</button>
+
+  <div class="section">
+    <h3>📌 1. SUB;;;;;SUB;</h3>
+    <textarea id="outSub" readonly></textarea>
+  </div>
+
+  <div class="section">
+    <h3>🆕 2. NEW;;;;;NEW;</h3>
+    <textarea id="outNew" readonly></textarea>
+  </div>
+
+  <div class="section">
+    <h3>🔗 3. NEW;;;SUB</h3>
+    <textarea id="outChain" readonly></textarea>
+  </div>
+
+  <div class="footer">
+    Made with ❤️ BY DP Support Team
+  </div>
+
+  <script>
+    function getRows() {
+      const raw = document.getElementById('input').value.trim();
+      return raw.split('\n').map(line => line.trim().split(/\s+/));
+    }
+
+    function process() {
+      const rows = getRows();
+      let subLines = [], newLines = [], chainLines = [];
+
+      rows.forEach(r => {
+        const sub = r[0] || '';
+        const nw = r[1] || '';
+        subLines.push(`${sub};;;;;SUB;`);
+        newLines.push(`${nw};;;;;NEW;`);
+        chainLines.push(`${nw};;;${sub}`);
+      });
+
+      document.getElementById('outSub').value = subLines.join('\n');
+      document.getElementById('outNew').value = newLines.join('\n');
+      document.getElementById('outChain').value = chainLines.join('\n');
+    }
+  </script>
+</body>
+</html>
