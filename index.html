@@ -145,13 +145,14 @@
 
       const reader = new FileReader();
       reader.onload = function (e) {
-        const lines = e.target.result.split(/\r?\n/).filter(Boolean);
+        const lines = e.target.result.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
 
         const subs = [], news = [], deletes = [];
         lines.forEach(line => {
-          if (line.endsWith("SUB;")) subs.push(line);
-          else if (line.endsWith("NEW;")) news.push(line);
-          else if (line.endsWith("TO_DELETE;")) deletes.push(line);
+          const clean = line.replace(/^"|"$/g, '').trim(); // remove quotes
+          if (clean.endsWith("SUB;")) subs.push(clean);
+          else if (clean.endsWith("NEW;")) news.push(clean);
+          else if (clean.endsWith("TO_DELETE;")) deletes.push(clean);
         });
 
         document.getElementById("subOutput").value = subs.join("\n");
